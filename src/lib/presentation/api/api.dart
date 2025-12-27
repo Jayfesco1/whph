@@ -15,6 +15,7 @@ import 'package:whph/core/application/features/sync/services/abstraction/i_devic
 import 'package:whph/presentation/ui/shared/utils/device_info_helper.dart';
 
 const int webSocketPort = 44040;
+const int httpPort = 44041;
 
 // Web socket server events
 final streamController = StreamController<Map<String, dynamic>>.broadcast();

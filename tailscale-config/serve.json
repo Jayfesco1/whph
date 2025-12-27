@@ -1,0 +1,14 @@
+{
+  "Web": {
+    "whph-server.taild0076.ts.net:443": {
+      "Handlers": {
+        "/": {
+          "Proxy": "http://127.0.0.1:44041"
+        }
+      }
+    }
+  },
+  "AllowFunnel": {
+    "whph-server.taild0076.ts.net:443": false
+  }
+}
