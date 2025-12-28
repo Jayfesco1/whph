@@ -24,8 +24,8 @@ dependencies:
   dart_json_mapper: ^2.2.11 # Needed for your mapper.g.dart
 
   acore:
-    path: ./src/packages/acore # Adjust this path if acore is elsewhere
-  
+    path: ./src/lib/corePackages/acore 
+    
 # RPS (Runner Package Script) commands - install with: dart pub global activate rps
 # Run commands from project root: rps <command>
 scripts:
