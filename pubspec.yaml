@@ -21,6 +21,10 @@ dependencies:
   mediatr: ^0.2.1
   get_it: ^8.0.0
   shelf: ^1.4.1
+  dart_json_mapper: ^2.2.11 # Needed for your mapper.g.dart
+
+  acore:
+    path: ./src/packages/acore # Adjust this path if acore is elsewhere
   
 # RPS (Runner Package Script) commands - install with: dart pub global activate rps
 # Run commands from project root: rps <command>

@@ -3,30 +3,32 @@ FROM dart:stable AS build
 
 WORKDIR /app
 
-# Copy pubspec first to cache dependencies
+# 1. Copy pubspecs
 COPY pubspec.* ./
+# 2. Copy local packages so acore is found
+COPY src/packages ./src/packages
+
+# 3. Get dependencies
 RUN dart pub get
 
-# Copy all files
+# 4. Copy everything else
 COPY . .
 
-# FIX: Map the library folder correctly
-# Dart expects 'package:whph/...' to be in /app/lib/
-# Your code is in /app/src/lib/
+# 5. CRITICAL: Map src/lib to lib
+# This ensures "package:whph/..." imports resolve to the correct files
 RUN mkdir -p lib && cp -r src/lib/* lib/
 
-# Compile the binary
-# We use --suppress-analytics and optimize for the server environment
+# 6. Build the binary
+# This should now ignore the UI folder entirely because our 
+# bin/server.dart doesn't import any UI files anymore.
 RUN dart compile exe bin/server.dart -o bin/server
 
 # --- STAGE 2: Runtime ---
 FROM debian:buster-slim
 
-# Copy the runtime and binary
 COPY --from=build /runtime/ /
 COPY --from=build /app/bin/server /app/bin/server
 
-# Standard WHPH ports
 EXPOSE 44040
 EXPOSE 44041
 
