@@ -13,6 +13,14 @@ repository: https://github.com/ahmet-cetinkaya/whph
 issue_tracker: https://github.com/ahmet-cetinkaya/whph/issues
 documentation: https://github.com/ahmet-cetinkaya/whph/blob/main/README.md
 
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  # These are required based on your bin/server.dart code:
+  mediatr: ^1.1.0        # Provides the 'Mediator' type
+  get_it: ^7.6.0         # Likely provides the 'container' resolve logic
+  
 # RPS (Runner Package Script) commands - install with: dart pub global activate rps
 # Run commands from project root: rps <command>
 scripts:

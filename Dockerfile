@@ -1,30 +1,27 @@
-# STAGE 1: Build the executable
+# STAGE 1: Build
 FROM dart:stable AS build
 
 WORKDIR /app
 
-# Copy pubspec files. The wildcard * handles cases where pubspec.lock might be missing.
+# Copy pubspec files first to leverage Docker cache
 COPY pubspec.* ./
 RUN dart pub get
 
-# Copy the rest of the source code
+# Copy the entire project
 COPY . .
 
-# Ensure dependencies are settled and compile
+# Ensure dependencies are settled and compile the server
 RUN dart pub get --offline
 RUN dart compile exe bin/server.dart -o bin/server
 
-# STAGE 2: Create the runtime image
-# We use a slim debian image or even 'scratch' for a tiny footprint
+# STAGE 2: Runtime
 FROM debian:buster-slim
 
-# Copy the compiled binary from the build stage
+# Copy the compiled binary and runtime libraries
 COPY --from=build /app/bin/server /app/bin/server
-
-# Copy necessary runtime libraries for Dart (SSL certificates, etc.)
 COPY --from=build /runtime/ /
 
-# Expose the ports (for documentation)
+# Ports (for documentation)
 EXPOSE 44040
 EXPOSE 44041
 
