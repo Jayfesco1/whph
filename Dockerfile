@@ -1,30 +1,32 @@
-# STAGE 1: Build
+# --- STAGE 1: Build ---
 FROM dart:stable AS build
 
 WORKDIR /app
 
-# 1. Copy pubspec first
+# Copy pubspec first to cache dependencies
 COPY pubspec.* ./
 RUN dart pub get
 
-# 2. Copy the rest of the project
+# Copy all files
 COPY . .
 
-# 3. FIX: Move the source code from 'src/lib' to the root 'lib' 
-# so 'package:whph/...' imports work correctly.
-RUN if [ -d "src/lib" ]; then cp -r src/lib ./lib; fi
+# FIX: Map the library folder correctly
+# Dart expects 'package:whph/...' to be in /app/lib/
+# Your code is in /app/src/lib/
+RUN mkdir -p lib && cp -r src/lib/* lib/
 
-# 4. Compile the server
-# This will now find lib/main.dart and lib/presentation/api/api.dart
+# Compile the binary
+# We use --suppress-analytics and optimize for the server environment
 RUN dart compile exe bin/server.dart -o bin/server
 
-# STAGE 2: Runtime
+# --- STAGE 2: Runtime ---
 FROM debian:buster-slim
 
+# Copy the runtime and binary
 COPY --from=build /runtime/ /
 COPY --from=build /app/bin/server /app/bin/server
 
-# Documentation of ports
+# Standard WHPH ports
 EXPOSE 44040
 EXPOSE 44041
 

@@ -20,7 +20,7 @@ dependencies:
   # These are required based on your bin/server.dart code:
   mediatr: ^0.2.1
   get_it: ^8.0.0
-
+  shelf: ^1.4.1
   
 # RPS (Runner Package Script) commands - install with: dart pub global activate rps
 # Run commands from project root: rps <command>
