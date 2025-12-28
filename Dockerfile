@@ -3,27 +3,26 @@ FROM dart:stable AS build
 
 WORKDIR /app
 
-# Copy pubspec files first to leverage Docker cache
+# Copy pubspec files first
 COPY pubspec.* ./
 RUN dart pub get
 
-# Copy the entire project
+# Copy everything (lib/, bin/, etc.)
 COPY . .
 
-# Ensure dependencies are settled and compile the server
-RUN dart pub get --offline
+# Compile the server
+# If your server needs the lib/ folder, 'dart compile' handles it automatically 
+# as long as the pubspec.yaml 'name' matches the package imports.
 RUN dart compile exe bin/server.dart -o bin/server
 
 # STAGE 2: Runtime
 FROM debian:buster-slim
 
-# Copy the compiled binary and runtime libraries
-COPY --from=build /app/bin/server /app/bin/server
+# Copy runtime dependencies and the binary
 COPY --from=build /runtime/ /
+COPY --from=build /app/bin/server /app/bin/server
 
-# Ports (for documentation)
 EXPOSE 44040
 EXPOSE 44041
 
-# Start the server
 CMD ["/app/bin/server"]

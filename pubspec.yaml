@@ -18,8 +18,9 @@ environment:
 
 dependencies:
   # These are required based on your bin/server.dart code:
-  mediatr: ^1.1.0        # Provides the 'Mediator' type
-  get_it: ^7.6.0         # Likely provides the 'container' resolve logic
+  mediatr: ^0.2.1
+  get_it: ^8.0.0
+
   
 # RPS (Runner Package Script) commands - install with: dart pub global activate rps
 # Run commands from project root: rps <command>
