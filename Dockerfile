@@ -1,25 +1,32 @@
-# Use the official Dart SDK image as the base image
-FROM dart:latest
+# STAGE 1: Build the executable
+FROM dart:stable AS build
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the pubspec files to the container
-COPY pubspec.yaml pubspec.lock ./
-
-# Install dependencies
+# Copy pubspec files. The wildcard * handles cases where pubspec.lock might be missing.
+COPY pubspec.* ./
 RUN dart pub get
 
-# Copy the source code to the container
+# Copy the rest of the source code
 COPY . .
 
-# Build the application
+# Ensure dependencies are settled and compile
+RUN dart pub get --offline
 RUN dart compile exe bin/server.dart -o bin/server
 
-# Expose the WebSocket port
+# STAGE 2: Create the runtime image
+# We use a slim debian image or even 'scratch' for a tiny footprint
+FROM debian:buster-slim
+
+# Copy the compiled binary from the build stage
+COPY --from=build /app/bin/server /app/bin/server
+
+# Copy necessary runtime libraries for Dart (SSL certificates, etc.)
+COPY --from=build /runtime/ /
+
+# Expose the ports (for documentation)
 EXPOSE 44040
-# Expose the HTTP port
 EXPOSE 44041
 
-# Start the server when the container is run
-CMD ["./bin/server"]
+# Start the server
+CMD ["/app/bin/server"]
