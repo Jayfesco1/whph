@@ -2,17 +2,18 @@ version: '3.8'
 
 services:
   # 1. TAILSCALE (The Network Gateway)
-tailscale:
+  tailscale:
     image: tailscale/tailscale:latest
-    hostname: whph-server
+    # Using variable for hostname
+    hostname: ${TS_HOSTNAME:-whph-server} 
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_STATEFUL_CONFIG=true
       - TS_EXTRA_ARGS=--advertise-tags=tag:server
-      - TS_SERVE_CONFIG=/config/serve.json # Point to a config file
+      - TS_SERVE_CONFIG=/config/serve.json
     volumes:
       - tailscale-state:/var/lib/tailscale
-      - ./tailscale-config:/config # Mount a folder for the config
+      - ./tailscale-config:/config
       - /dev/net/tun:/dev/net/tun
     cap_add:
       - NET_ADMIN
@@ -20,22 +21,22 @@ tailscale:
     networks:
       - shared_network
       
-  # 2. YOUR APP (Inside Tailscale)
+  # 2. YOUR APP
   whph-server:
     build: .
-    # Use Tailscale's network stack directly
     network_mode: "service:tailscale" 
     environment:
       - AUDIT_LOG_HOST=audit-log-service
-      - AUDIT_LOG_PORT=44042
+      # Using variable for port
+      - AUDIT_LOG_PORT=${AUDIT_LOG_PORT}
     depends_on:
       - tailscale
 
-  # 3. INTERNAL SERVICE (Accessible via Docker Network)
+  # 3. INTERNAL SERVICE
   audit-log-service:
     image: nginx:alpine
     ports:
-      - "44042:44042"
+      - "${AUDIT_LOG_PORT}:${AUDIT_LOG_PORT}"
     networks:
       - shared_network
 
