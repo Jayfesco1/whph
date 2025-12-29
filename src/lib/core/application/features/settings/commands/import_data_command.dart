@@ -40,7 +40,7 @@ import 'package:whph/core/domain/shared/constants/app_info.dart';
 import 'package:whph/core/application/features/settings/constants/settings_translation_keys.dart';
 import 'package:whph/core/application/features/settings/services/abstraction/i_import_data_migration_service.dart';
 import 'package:whph/core/application/shared/services/abstraction/i_compression_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:whph/infrastructure/persistence/shared/contexts/drift/drift_app_context.dart';
 import 'dart:io';
 

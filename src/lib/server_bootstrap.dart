@@ -16,7 +16,7 @@ class ServerBootstrapService {
     // Register ONLY logic modules
     registerPersistence(container);
     registerInfrastructure(container);
-    registerApplication(container);
+    registerApplication(container, isServer: true); 
     
     // EXCLUDE: registerUIPresentation(container); <--- This was the error source
 

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:acore/acore.dart';
 import 'package:whph/core/application/shared/services/abstraction/i_logger_service.dart';
 

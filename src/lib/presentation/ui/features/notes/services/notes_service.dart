@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
 class NotesService extends ChangeNotifier {
   // Event listeners for note-related events

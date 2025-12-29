@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
 class AppUsagesService extends ChangeNotifier {
   // Event listeners for app usage-related events - keeping nullable for the value

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
 class HabitsService extends ChangeNotifier {
   // Event notifiers for habit-related events
