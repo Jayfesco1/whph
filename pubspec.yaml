@@ -25,7 +25,12 @@ dependencies:
 
   acore:
     path: ./src/lib/corePackages/acore 
-    
+
+dependency_overrides:
+  intl: ^0.19.0
+  # Forcing an older analyzer prevents the "macros from sdk doesn't exist" error
+  analyzer: 6.4.1
+  
 # RPS (Runner Package Script) commands - install with: dart pub global activate rps
 # Run commands from project root: rps <command>
 scripts:
