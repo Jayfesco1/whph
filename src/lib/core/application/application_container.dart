@@ -167,5 +167,7 @@ void registerApplication(IContainer container) {
     noteRepository,
     noteTagRepository,
   );
-  registerWidgetFeature(container, mediator);
+  if (!isServer) {
+    registerWidgetFeature(container, mediator);
+  }
 }
