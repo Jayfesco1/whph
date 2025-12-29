@@ -23,6 +23,10 @@ dependencies:
   shelf: ^1.4.1
   dart_json_mapper: ^2.2.11 # Needed for your mapper.g.dart
   meta: ^1.11.0
+  drift: ^2.16.0 
+  sqlite3: ^2.4.3
+  path: ^1.9.0
+  
   acore:
     path: ./src/lib/corePackages/acore 
 
