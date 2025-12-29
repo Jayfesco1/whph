@@ -1,35 +1,31 @@
 services:
-  # 1. TAILSCALE (Private Gateway)
   tailscale:
     image: tailscale/tailscale:latest
-    hostname: ${TS_HOSTNAME:-whph-server}
+    hostname: whph-server
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_STATEFUL_CONFIG=true
-      - TS_EXTRA_ARGS=--advertise-tags=tag:server --hostname=whph-server
-      - TS_USERSPACE=false
+      # ADD THIS LINE: It forces Tailscale to save keys to the volume
+      - TS_STATEDIR=/var/lib/tailscale
+      - TS_EXTRA_ARGS=--advertise-tags=tag:server
     volumes:
-      - tailscale-state:/var/lib/tailscale  # <--- THIS IS THE KEY
-
+      - tailscale-state:/var/lib/tailscale
       - /dev/net/tun:/dev/net/tun
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    restart: always  # Ensure it comes back after a crash
     networks:
       - shared_network
-      
-  # 2. WHPH SERVER
+
   whph-server:
     build: .
-    network_mode: "service:tailscale" 
+    network_mode: "service:tailscale"
     environment:
       - AUDIT_LOG_HOST=audit-log-service
       - AUDIT_LOG_PORT=${AUDIT_LOG_PORT}
     depends_on:
       - tailscale
 
-  # 3. AUDIT LOG SERVICE
   audit-log-service:
     image: nginx:alpine
     networks:
