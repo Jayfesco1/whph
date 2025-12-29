@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:acore/acore.dart';
 import 'package:mediatr/mediatr.dart';
 import 'package:path/path.dart' as path;

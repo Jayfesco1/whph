@@ -13,7 +13,7 @@ import 'package:whph/core/domain/shared/constants/app_info.dart';
 import 'package:whph/core/domain/features/sync/sync_device.dart';
 import 'package:whph/infrastructure/desktop/features/sync/websocket_connection_manager.dart';
 import 'package:whph/infrastructure/desktop/features/sync/websocket_message_validator.dart';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
 const int webSocketPort = 44040;
 const int defaultSyncInterval = 1800;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:whph/core/domain/features/tasks/task.dart';
 import 'package:acore/acore.dart' as acore;

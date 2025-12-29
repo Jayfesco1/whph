@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 
 /// Manages the global state for app startup errors
 class AppStartupErrorState extends ChangeNotifier {

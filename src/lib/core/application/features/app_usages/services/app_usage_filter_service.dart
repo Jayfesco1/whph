@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:whph/core/application/features/app_usages/constants/system_app_exclusions.dart';
 import 'package:whph/core/application/features/app_usages/services/abstraction/i_app_usage_filter_service.dart';
 import 'package:whph/core/application/features/app_usages/services/abstraction/i_app_usage_ignore_rule_repository.dart';

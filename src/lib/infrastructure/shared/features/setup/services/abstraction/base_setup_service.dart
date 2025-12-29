@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:whph/core/domain/shared/utils/logger.dart';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:archive/archive.dart';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:whph/core/application/shared/services/abstraction/i_compression_service.dart';
 
 /// Service for handling compression and decompression operations in background isolates

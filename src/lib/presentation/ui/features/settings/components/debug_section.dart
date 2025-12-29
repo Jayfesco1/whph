@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 import 'package:whph/presentation/ui/features/app_usages/pages/android_app_usage_debug_page.dart';
 import 'package:whph/presentation/ui/shared/constants/app_theme.dart';
