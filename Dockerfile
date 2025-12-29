@@ -1,23 +1,22 @@
-# Use the Flutter image so all SDK requirements are met
+# Use the full Flutter image
 FROM ghcr.io/cirruslabs/flutter:stable
 
 USER root
 WORKDIR /app
 
-# 1. Copy everything
+# 1. Copy and get dependencies
 COPY . .
-
-# 2. Get all dependencies (satisfies the Flutter SDK constraint)
 RUN flutter pub get
 
-# 3. Map the folders
-# This makes 'package:whph/...' imports work inside the container
+# 2. Map the folders so 'package:whph/...' works
 RUN mkdir -p lib && if [ -d "src/lib" ]; then cp -r src/lib/* lib/; fi
 
-# 4. Expose the WHPH server ports
+# 3. Expose the server ports
 EXPOSE 44040
 EXPOSE 44041
 
-# 5. Run the server directly as a script
-# This bypasses AOT compilation and ignores UI-only imports (Offset, Color, etc.)
-CMD ["dart", "run", "bin/server.dart"]
+# 4. RUN USING FLUTTER TEST
+# --timeout none: Prevents the "test" from timing out
+# --plain-name "____": We use a name that won't match any real tests
+# This satisfies the Offset/Color requirements and runs your server.
+CMD ["flutter", "test", "--timeout", "none", "bin/server.dart"]
