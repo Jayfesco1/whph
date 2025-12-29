@@ -18,14 +18,22 @@ environment:
 
 dependencies:
   # These are required based on your bin/server.dart code:
+  # Core Logic & DI
   mediatr: ^0.2.1
   get_it: ^8.0.0
-  shelf: ^1.4.1
-  dart_json_mapper: ^2.2.11 # Needed for your mapper.g.dart
-  meta: ^1.11.0
-  drift: ^2.16.0 
+  dart_json_mapper: ^2.2.16
+  
+  # Database (Required based on your drift error log)
+  drift: ^2.16.0
   sqlite3: ^2.4.3
   path: ^1.9.0
+
+  # Server / Networking
+  shelf: ^1.4.1
+  http: ^1.1.0
+
+  # Found in your grep
+  device_info_plus: ^10.1.0 
   
   acore:
     path: ./src/lib/corePackages/acore 

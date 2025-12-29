@@ -1,4 +1,4 @@
-# Use the full Flutter image so all dependencies (including Flutter logic) are available
+# Use the Flutter image so all SDK requirements are met
 FROM ghcr.io/cirruslabs/flutter:stable
 
 USER root
@@ -7,18 +7,17 @@ WORKDIR /app
 # 1. Copy everything
 COPY . .
 
-# 2. Get dependencies (this satisfies the acore/flutter requirement)
+# 2. Get all dependencies (satisfies the Flutter SDK constraint)
 RUN flutter pub get
 
 # 3. Map the folders
-# This ensures that 'package:whph/...' imports work correctly
+# This makes 'package:whph/...' imports work inside the container
 RUN mkdir -p lib && if [ -d "src/lib" ]; then cp -r src/lib/* lib/; fi
 
-# 4. Port exposure
+# 4. Expose the WHPH server ports
 EXPOSE 44040
 EXPOSE 44041
 
-# 5. RUN IN JIT MODE
-# We do NOT use 'dart compile'. We run the script directly.
-# This avoids the "Type Offset not found" errors.
+# 5. Run the server directly as a script
+# This bypasses AOT compilation and ignores UI-only imports (Offset, Color, etc.)
 CMD ["dart", "run", "bin/server.dart"]
