@@ -1,7 +1,7 @@
 # --- STAGE 1: Build ---
 FROM ghcr.io/cirruslabs/flutter:stable AS build
 
-# Set environment to ignore root warnings
+# Set environment to suppress the root warning and use a dedicated cache
 ENV PUB_CACHE=/root/.pub-cache
 USER root
 WORKDIR /app
@@ -9,15 +9,16 @@ WORKDIR /app
 # 1. Copy everything
 COPY . .
 
-# 2. Force a clean get to apply dependency_overrides
-# We use --suppress-analytics to keep the logs clean
-RUN flutter pub env && flutter pub get --no-example
+# 2. Get dependencies
+# We use 'flutter pub get' because the acore package requires the Flutter SDK
+RUN flutter pub get --no-example
 
 # 3. MAP THE FOLDERS
+# Move everything from src/lib to the root lib folder
 RUN mkdir -p lib && cp -r src/lib/* lib/
 
 # 4. Compile the binary
-# We use 'dart compile' because we are building a server, not a UI app
+# We use 'dart compile' because we are building a standalone server binary
 RUN dart compile exe bin/server.dart -o bin/server
 
 # --- STAGE 2: Runtime ---
