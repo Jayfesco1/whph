@@ -17,23 +17,45 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  # These are required based on your bin/server.dart code:
-  # Core Logic & DI
+  # Base Logic & DI
   mediatr: ^0.2.1
   get_it: ^8.0.0
   dart_json_mapper: ^2.2.16
-  
-  # Database (Required based on your drift error log)
+  acore:
+    path: ./src/lib/corePackages/acore
+
+  # Database & Infrastructure
   drift: ^2.16.0
   sqlite3: ^2.4.3
   path: ^1.9.0
-
-  # Server / Networking
   shelf: ^1.4.1
   http: ^1.1.0
+  archive: ^3.6.1
+  csv: ^6.0.0
+  timezone: ^0.9.4
+  nanoid2: ^2.0.0
 
-  # Found in your grep
-  device_info_plus: ^10.1.0 
+  # Flutter-based dependencies (Required for the JIT runner to resolve types)
+  easy_localization: ^3.0.7
+  easy_localization_multi: ^1.0.0
+  easy_localization_yaml: ^1.0.0
+  home_widget: ^0.7.1
+  file_picker: ^8.1.2
+  share_plus: ^10.1.0
+  android_intent_plus: ^5.1.0
+  flutter_local_notifications: ^17.2.1
+  launch_at_startup: ^1.1.0
+  window_manager: ^0.3.9
+  wakelock_plus: ^1.2.8
+  tray_manager: ^0.2.4
+  file_saver: ^0.2.14
+  path_provider: ^2.1.3
+  network_info_plus: ^6.0.0
+  device_info_plus: ^10.1.0
+  qr_code_scanner_plus: ^0.0.1
+  flutter_confetti: ^0.1.0
+  dynamic_color: ^1.7.0
+  audioplayers: ^5.2.1
   
   acore:
     path: ./src/lib/corePackages/acore 
